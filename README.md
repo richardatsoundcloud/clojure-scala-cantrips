@@ -20,28 +20,41 @@ This document is more for educational purposes rather than production usage. The
 
 ## Let’s get started
 
+#### Prerequisites
+
+The source code of all of the examples below can be found in the [`src` directory](src). In order to see the java api of the scala structure you can run;
+```make
+make show-{{example-name}}
+```
+
+In order to execute the clojure code that consumes the scala api  you can run;
+```make
+make run-{{example-name}}
+```
 
 ### Accessing the constructor
 
-Instantiating regular scala classes is as straightforward as instantiating a java class. Given the class;
+Instantiating regular scala classes is as straightforward as instantiating a java class. Given [this class](src/primary_constructor/scala.scala);
 ```scala
 class TestClass(param1: Int, param2: String)
 ```
 
-Scala generates the java code below;
+`make show-primary-constructor` generates the java code below ;
 ```java
 public class TestClass {
   public TestClass(int, java.lang.String);
 }
 ```
 
-And the clojure code to instantiate this class looks like 
+And the clojure code to instantiate this class looks like [this](src/primary_constructor/clojure.clj);
 ```clojure
-(new TestClass Param1 param2)
+(new TestClass 1 "test")
 
 ;or the shortcut is
-(TestClass. Param1 param2)
+(TestClass. 1 "test")
 ```
 
 
-
+TODO:
+Mention versions 
+mention deps `lein` `scalac`
