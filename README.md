@@ -49,11 +49,76 @@ public class TestClass {
 And the clojure code to instantiate this class looks like [this](src/primary_constructor/clojure.clj);
 ```clojure
 (let [instance1 (new TestClass 1 "test")
-        instance2 (TestClass. 1 "test")] ;the shorthand notation
+      instance2 (TestClass. 1 "test")] ;the shorthand notation
 
-        (println instance1)   ;TestClass@
-        (println instance2))) ;TestClass@
+      (println instance1)   ;TestClass@
+      (println instance2))) ;TestClass@
 ```
+
+## Accessing the n-ary constructors
+
+Just same as in Java, having multiple constructor is also possible in Scala. Accessing these constructors is as straightforward as accessing the primary constructor. [The class below](src/n_ary_constructor/scala.scala);
+```scala
+class TestClass(val a: Int, val b: Int) {
+
+  def this(a: Int) {
+    this(a, 0);
+  }
+
+  def this() {
+    this(0, 0);
+  }
+
+  def this(a: String) {
+    this(a.toInt, a.toInt);
+  }
+}
+```
+
+Generates the java api below (`make show-nary-constructor`);
+```java
+public class clojure.scala.interop.nary.constructor.TestClass {
+  public int a();
+  public int b();
+  public clojure.scala.interop.nary.constructor.TestClass(int, int);
+  public clojure.scala.interop.nary.constructor.TestClass(int);
+  public clojure.scala.interop.nary.constructor.TestClass();
+  public clojure.scala.interop.nary.constructor.TestClass(java.lang.String);
+}
+```
+
+Accessing these constructors are demonstrated [in this class](src/n_ary_constructor/clojure.clj);
+```clojure
+(let [instance1 (TestClass. 1 2)
+    instance2 (TestClass. 2)
+    instance3 (TestClass.)
+    instance4 (TestClass. "4")]
+
+    (println (.a instance1)) ; 1
+    (println (.b instance1)) ; 2
+
+    (println (.a instance2)) ; 2
+    (println (.b instance2)) ; 0
+
+    (println (.a instance3)) ; 0
+    (println (.b instance3)) ; 0
+
+    (println (.a instance4))   ; 4
+    (println (.b instance4)))) ; 4
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 TODO:

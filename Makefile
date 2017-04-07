@@ -9,3 +9,9 @@ show-primary-constructor:
 
 run-primary-constructor:
 	lein run -m primary-constructor.clojure
+
+show-nary-constructor:
+	javap src/clojure/scala/interop/nary/constructor/TestClass.class
+
+run-nary-constructor:
+	lein run -m n-ary-constructor.clojure
