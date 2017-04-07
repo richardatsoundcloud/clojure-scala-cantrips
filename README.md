@@ -9,11 +9,11 @@ Clojure and scala, both being laguages that run on jvm, have a common denominato
 The internals of scala to java translation can be uncovered by using the [javap](http://docs.oracle.com/javase/7/docs/technotes/tools/windows/javap.html) tool. The knowledge about clojure - java interoperability is drawn from [its documentation](https://clojure.org/reference/java_interop). All of the examples shown in this document are put together based on these two resources.
 
 
-## Who is this document for?
+#### Who is this document for?
 
 This document covers the basic usecases of clojure - scala interoperability. People who want to learn about how the scala structures are represented in java and how the clojure code interacts with them would be interested.
 
-## Why?
+#### Why?
 
 This document is more for educational purposes rather than production usage. There are libraries out there that does a good job in providing the functionality covered here. This document is for understanding the underlying semantics of clojure - scala interoperability.
 
@@ -32,7 +32,7 @@ In order to execute the clojure code that consumes the scala api  you can run;
 make run-{{example-name}}
 ```
 
-### Accessing the constructor
+## Accessing the constructor
 
 Instantiating regular scala classes is as straightforward as instantiating a java class. Given [this class](src/primary_constructor/scala.scala);
 ```scala
