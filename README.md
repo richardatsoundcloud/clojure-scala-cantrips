@@ -39,7 +39,7 @@ Instantiating regular scala classes is as straightforward as instantiating a jav
 class TestClass(param1: Int, param2: String)
 ```
 
-`make show-primary-constructor` generates the java code below ;
+`make show-primary-constructor` generates the java api below ;
 ```java
 public class TestClass {
   public TestClass(int, java.lang.String);
@@ -107,14 +107,33 @@ Accessing these constructors are demonstrated [in this class](src/n_ary_construc
     (println (.b instance4)))) ; 4
 ```
 
+## Accessing the immutable instance fields
 
+Let’s look at [the class below](src/immutable_fields/scala.scala);
+```scala
+class TestClass(val attr1: Int) {
+ val attr2: Int = 2
+}
+```
 
+This class generates the api below (`make show-immutable-fields`);
+```java
+public class clojure.scala.interop.immutable.fields.TestClass {
+  public int attr1();
+  public int attr2();
+  public clojure.scala.interop.immutable.fields.TestClass(int);
+}
+```
+From the above code we can deduce that defining a `val` in the constructor or in the class body doesn’t change the java api of the class. Both `attr1` and `attr3` follow the same pattern in their disassembled code. Another noteworthy point is that scala `val`s are turned into java methods.
 
-
-
-
-
-
+Let’s try to access these fields. Following the clojure - java interop accessing the methods looks like [this class](src/immutable_fields/clojure.clj);
+```clojure
+(let [instance (TestClass. 1)
+        attr1 (.attr1 instance)
+        attr2 (.attr2 instance)]
+    (println attr1)   ; 1
+    (println attr2))) ; 2
+````
 
 
 
