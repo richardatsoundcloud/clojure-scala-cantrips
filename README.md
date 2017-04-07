@@ -16,3 +16,32 @@ This document covers the basic usecases of clojure - scala interoperability. Peo
 ## Why?
 
 This document is more for educational purposes rather than production usage. There are libraries out there that does a good job in providing the functionality covered here. This document is for understanding the underlying semantics of clojure - scala interoperability.
+
+
+## Let’s get started
+
+
+### Accessing the constructor
+
+Instantiating regular scala classes is as straightforward as instantiating a java class. Given the class;
+```scala
+class TestClass(param1: Int, param2: String)
+```
+
+Scala generates the java code below;
+```java
+public class TestClass {
+  public TestClass(int, java.lang.String);
+}
+```
+
+And the clojure code to instantiate this class looks like 
+```clojure
+(new TestClass Param1 param2)
+
+;or the shortcut is
+(TestClass. Param1 param2)
+```
+
+
+
