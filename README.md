@@ -48,10 +48,11 @@ public class TestClass {
 
 And the clojure code to instantiate this class looks like [this](src/primary_constructor/clojure.clj);
 ```clojure
-(new TestClass 1 "test")
+(let [instance1 (new TestClass 1 "test")
+        instance2 (TestClass. 1 "test")] ;the shorthand notation
 
-;or the shortcut is
-(TestClass. 1 "test")
+        (println instance1)   ;TestClass@
+        (println instance2))) ;TestClass@
 ```
 
 
