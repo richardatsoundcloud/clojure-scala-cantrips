@@ -124,7 +124,7 @@ public class clojure.scala.interop.immutable.fields.TestClass {
   public clojure.scala.interop.immutable.fields.TestClass(int);
 }
 ```
-From the above code we can deduce that defining a `val` in the constructor or in the class body doesn’t change the java api of the class. Both `attr1` and `attr3` follow the same pattern in their disassembled code. Another noteworthy point is that scala `val`s are turned into java methods.
+From the above code we can deduce that defining a `val` in the constructor or in the class body doesn’t change the java api of the class. Both `attr1` and `attr2` follow the same pattern in their disassembled code. Another noteworthy point is that scala `val`s are turned into java methods.
 
 Let’s try to access these fields. Following the clojure - java interop accessing the methods looks like [this class](src/immutable_fields/clojure.clj);
 ```clojure
@@ -135,8 +135,47 @@ Let’s try to access these fields. Following the clojure - java interop accessi
     (println attr2))) ; 2
 ````
 
+## Accessing mutable instance fields
 
+Let’s repeat the same exercise [with mutable fields](src/mutable_fields/scala.scala), namely `var`s;
+```scala
+class TestClass(var attr1: Int){
+ var attr2: Int = 2
+}
+```
 
+This class compiles into (`make show-mutable-fields`);
+```java
+public class clojure.scala.interop.mutable.fields.TestClass {
+  public int attr1();
+  public void attr1_$eq(int);
+  public int attr2();
+  public void attr2_$eq(int);
+  public clojure.scala.interop.mutable.fields.TestClass(int);
+}
+```
+
+Again here defining a field in the constructor or in the class body doesn’t make a difference on the java api. Accessing the mutable fields is same as accessing the immutable fields. Demonstrated below;
+```clojure
+(let [instance (TestClass. 1)
+        attr1 (.attr1 instance)
+        attr2 (.attr2 instance)]
+    (println attr1)   ; 1
+    (println attr2))  ; 2
+```
+
+What about mutating these fields? You probably noticed this weird named methods (we’ll have plenty of these!);
+```java
+public void attr1_$eq(int);
+```
+
+This is a method that takes an `int` and doesn’t return back a value. This is the setter method of the variable `attr1`, that lets us mutate its value. Let's see its usage below;
+```clojure
+(let [instance (TestClass. 10)]
+    (println (.attr1 instance)) ; 10
+    (.attr1_$eq instance 99)
+    (println (.attr1 instance)))) ; 99
+```
 
 
 

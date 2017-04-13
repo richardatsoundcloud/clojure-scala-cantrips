@@ -21,3 +21,9 @@ show-immutable-fields: compile
 
 run-immutable-fields:
 	lein run -m immutable-fields.clojure
+
+show-mutable-fields: compile
+	javap src/clojure/scala/interop/mutable/fields/TestClass.class
+
+run-mutable-fields:
+	lein run -m mutable-fields.clojure
