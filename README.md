@@ -1,3 +1,12 @@
+___This PR is not meant to be merged. It's just used to make comments on the text.___
+
+This looks great! Thanks for making it. I can't wait to get to the part where I find out what `(.apply Method$/MODULE$ method)` means!
+
+General notes:
+
+1. Java, Scala, Clojure, JVM etc. have inconsistent capitalization. I think they should be capitalized, but you should go one way or the other.
+2. It seems this document says "Java" a lot when it means "Java byte code". Sometimes when you say Java you are actually talking about Java, but most of the time you are talking about Java byte code.
+
 # Clojure-Scala Cantrips
 
 This document covers couple of tips and tricks on how to consume scala apis from a clojure codebase.
@@ -7,6 +16,8 @@ Clojure and scala, both being laguages that run on jvm, have a common denominato
   * How to consume a java api from clojure code
 
 The internals of scala to java translation can be uncovered by using the [javap](http://docs.oracle.com/javase/7/docs/technotes/tools/windows/javap.html) tool. The knowledge about clojure - java interoperability is drawn from [its documentation](https://clojure.org/reference/java_interop). All of the examples shown in this document are put together based on these two resources.
+
+[I would explain a tiny bit more what javap is. Also, "its documentation" might be more specific as "Clojure's documentation".]
 
 
 #### Who is this document for?
@@ -32,6 +43,8 @@ In order to execute the clojure code that consumes the scala api  you can run;
 make run-{{example-name}}
 ```
 
+[I would say "that consumes the resulting Java api", because that's what it's doing, right?]
+
 ## Accessing the constructor
 
 Instantiating regular scala classes is as straightforward as instantiating a java class. Given [this class](src/primary_constructor/scala.scala);
@@ -45,6 +58,8 @@ public class TestClass {
   public TestClass(int, java.lang.String);
 }
 ```
+
+[It is confusing to me that the class names are different from the make task names. Instead of "TestClass", I think it should be called "PrimaryConstructorClass" or "PrimaryConstructorTestClass", and likewise all the similar correspondences between other class names and names of make tasks.]
 
 And the clojure code to instantiate this class looks like [this](src/primary_constructor/clojure.clj);
 ```clojure
@@ -125,6 +140,8 @@ public class clojure.scala.interop.immutable.fields.TestClass {
 }
 ```
 From the above code we can deduce that defining a `val` in the constructor or in the class body doesn’t change the java api of the class. Both `attr1` and `attr2` follow the same pattern in their disassembled code. Another noteworthy point is that scala `val`s are turned into java methods.
+
+[I would say compiled, not disassembled.]
 
 Let’s try to access these fields. Following the clojure - java interop accessing the methods looks like [this class](src/immutable_fields/clojure.clj);
 ```clojure
